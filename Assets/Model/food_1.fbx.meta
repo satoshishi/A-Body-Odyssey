@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: 64d498334b863634383e863a28c70211
+timeCreated: 1471942784
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Camera
+    100002: Camera.001
+    100004: //RootNode
+    100006: Lamp
+    100008: Lamp.001
+    100010: Sphere
+    100012: "\u7ACB\u65B9\u4F53"
+    100014: "\u7ACB\u65B9\u4F53_MeshPart0"
+    100016: "\u7ACB\u65B9\u4F53_MeshPart1"
+    100018: "\u7ACB\u65B9\u4F53_MeshPart2"
+    100020: "\u7ACB\u65B9\u4F53_MeshPart3"
+    100022: "\u7ACB\u65B9\u4F53_MeshPart4"
+    100024: Cube
+    100026: Cube_MeshPart0
+    100028: Cube_MeshPart1
+    400000: Camera
+    400002: Camera.001
+    400004: //RootNode
+    400006: Lamp
+    400008: Lamp.001
+    400010: Sphere
+    400012: "\u7ACB\u65B9\u4F53"
+    400014: "\u7ACB\u65B9\u4F53_MeshPart0"
+    400016: "\u7ACB\u65B9\u4F53_MeshPart1"
+    400018: "\u7ACB\u65B9\u4F53_MeshPart2"
+    400020: "\u7ACB\u65B9\u4F53_MeshPart3"
+    400022: "\u7ACB\u65B9\u4F53_MeshPart4"
+    400024: Cube
+    400026: Cube_MeshPart0
+    400028: Cube_MeshPart1
+    2300000: Sphere
+    2300002: "\u7ACB\u65B9\u4F53_MeshPart0"
+    2300004: "\u7ACB\u65B9\u4F53_MeshPart1"
+    2300006: "\u7ACB\u65B9\u4F53_MeshPart2"
+    2300008: "\u7ACB\u65B9\u4F53_MeshPart3"
+    2300010: "\u7ACB\u65B9\u4F53_MeshPart4"
+    2300012: Cube
+    2300014: Cube_MeshPart0
+    2300016: Cube_MeshPart1
+    3300000: Sphere
+    3300002: "\u7ACB\u65B9\u4F53_MeshPart0"
+    3300004: "\u7ACB\u65B9\u4F53_MeshPart1"
+    3300006: "\u7ACB\u65B9\u4F53_MeshPart2"
+    3300008: "\u7ACB\u65B9\u4F53_MeshPart3"
+    3300010: "\u7ACB\u65B9\u4F53_MeshPart4"
+    3300012: Cube
+    3300014: Cube_MeshPart0
+    3300016: Cube_MeshPart1
+    4300000: Sphere
+    4300002: "\u7ACB\u65B9\u4F53_MeshPart0"
+    4300004: "\u7ACB\u65B9\u4F53_MeshPart1"
+    4300006: "\u7ACB\u65B9\u4F53_MeshPart2"
+    4300008: "\u7ACB\u65B9\u4F53_MeshPart3"
+    4300010: "\u7ACB\u65B9\u4F53_MeshPart4"
+    4300012: Cube
+    4300014: Cube_MeshPart0
+    4300016: Cube_MeshPart1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
