@@ -86,14 +86,27 @@ public class StimulusController : MonoBehaviour
 
     }
 
-    public const float FULL_STIMULUS_BELLY = 0.4f; 
+    public void Pitch(float pitch, AudioSource audio)
+    {
+        audio.pitch = pitch;
+    }
+
+    public void Pitch(float pitch, Stimulus_Type type)
+    {
+        List<AudioSource> audio = type == Stimulus_Type.STIMULUS ? StimulusSource : HeartbeatSource;
+
+        foreach (AudioSource a in audio)
+            Pitch(pitch, a);
+    }
+
+    public const float FULL_STIMULUS_BELLY = 0.4f;
 
     /// <summary>
     /// 移動量に応じて刺激の強さを調整する
     /// 移動量が0~0.5で腹を刺激(0.25でmax,0.5でmin)
     /// 移動量が0.25=0.75で足を刺激(0.5でmax,0.75でmin)
     /// </summary>
-    /// <param name="pitch"></param>
+    /// <param name="strength"></param>
     public void UpdateStrength(float strength)
     {
         StopAllCoroutines();
@@ -105,7 +118,8 @@ public class StimulusController : MonoBehaviour
             StimulusSource[(int)Stimulus_Ch.SEVEN].volume = 0f;
             StimulusSource[(int)Stimulus_Ch.EIGHT].volume = 0f;
         }
-        /*else*/ if (strength >= FULL_STIMULUS_BELLY)
+        /*else*/
+        if (strength >= FULL_STIMULUS_BELLY)
         {
             if (!StimulusSource[(int)Stimulus_Ch.SIX].isPlaying)
             {
@@ -158,5 +172,5 @@ public class StimulusController : MonoBehaviour
         }
         StopAll();
     }
-    
+
 }
