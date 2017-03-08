@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: wall
-  m_Shader: {fileID: 4800000, guid: b95caf64e2cc3614892026a94bb2be84, type: 3}
+  m_Shader: {fileID: 4800000, guid: d84268709d11078d11005b9844295342, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
@@ -75,6 +75,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ToonShade
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
         name: _BumpScale
@@ -85,6 +91,9 @@ Material:
     - first:
         name: _Cutoff
       second: 0.5
+    - first:
+        name: _Darken
+      second: 0
     - first:
         name: _DetailNormalMapScale
       second: 1
@@ -113,6 +122,9 @@ Material:
         name: _Parallax
       second: 0.02
     - first:
+        name: _SeeThru
+      second: 0.25
+    - first:
         name: _SmoothnessTextureChannel
       second: 0
     - first:
@@ -127,6 +139,9 @@ Material:
     - first:
         name: _ZWrite
       second: 1
+    - first:
+        name: g_flOutlineWidth
+      second: 0.005
     m_Colors:
     - first:
         name: _Color
@@ -134,3 +149,12 @@ Material:
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SceneTint
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _TintColor
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: g_vOutlineColor
+      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
