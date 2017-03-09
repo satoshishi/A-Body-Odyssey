@@ -14,7 +14,7 @@ MonoBehaviour:
   path_name: path_i
   scene_name: i
   bgm: 0
-  is_use_physiological: 0
+  is_use_physiological: 1
   walk_stimules_pitch: 0.3
   heart_pitch: 0.85
   light_range: 34

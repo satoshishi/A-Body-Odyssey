@@ -83,6 +83,7 @@ public class StimulusController : MonoBehaviour
 
         if (!target.IsAlreadyPlaying)
         {
+        //    Debug.Log(ch + " "+ target.IsAlreadyPlaying);
             target.source.Play();
             target.IsAlreadyPlaying = true;
 

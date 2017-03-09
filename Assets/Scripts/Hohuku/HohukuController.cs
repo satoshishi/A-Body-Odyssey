@@ -155,9 +155,11 @@ public class HohukuController : MonoBehaviour
 
                 if (IsMoveForward() || is_use_debug_move)
                 {
-                    move.Move(0.01f);
+                    move.Move();
                     sound.Play(SoundEventController.AudioType.MOVE);
-                    stimulus.UpdateStrength(PullArea());
+                    // stimulus.UpdateStrength(PullArea()); 本来
+                    stimulus.UpdateStrength(0.5f);
+                    //  Debug.Log(PullArea());
                 }
                 BeforePullArea = PullArea();
                 break;
