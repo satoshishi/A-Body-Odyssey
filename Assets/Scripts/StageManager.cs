@@ -8,9 +8,9 @@ using System.Collections.Generic;
 /// </summary>
 public class StageManager : MonoBehaviour
 {
-    public AudioSource heart;
+   // public AudioSource heart;
     public SoundEventController sound;
-    //public MoveManager move;
+    public MoveController move;
     public BodyMapController narration;
     public Light light;
     public SyoukaController syouka;
@@ -63,7 +63,7 @@ public class StageManager : MonoBehaviour
 
         InitStages();
  //  ChangeStage(SCENE_TYPE.NOON);
-        ChangeStage(SCENE_TYPE.NOON);
+        ChangeStage(SCENE_TYPE.EAT);
     }
 
     void Update()
@@ -212,7 +212,7 @@ public class StageManager : MonoBehaviour
                 stimulus.StopAll();
                 light.intensity = next_data.intensity;//ライト
                 light.range = next_data.light_range;
-              //  StartCoroutine(move.Init(next_data,false));//移動パラメータの初期化
+                sound.SetBGM(SoundEventController.BgmType.EAT);
                 break;
                 
             case SCENE_TYPE.SYOUTYOU_1:
@@ -226,10 +226,6 @@ public class StageManager : MonoBehaviour
                 break;
             /*食道の場合匍匐はさせず自動で移動させる*/
             case SCENE_TYPE.SYOKUDOU:
-                //stimulus.PlayHeratBeat();
-                sound.PlayPhysiologicalOneShot(next_data.physiological, 0f);
-                UpdateStageParameter(now_type, next_type, next_data);
-                break;
             case SCENE_TYPE.I:
             case SCENE_TYPE.SYOUTYOU_2:
             case SCENE_TYPE.SYOUTYOU_3:
@@ -240,21 +236,21 @@ public class StageManager : MonoBehaviour
                 break;
 
             case SCENE_TYPE.DISCHARGE:
-                stimulus.StopAll();
+                stimulus.StopAll();//刺激も停止
+                sound.Stop();//soundを全部止める
+                sound.SetBGM(SoundEventController.BgmType.DISCHARGE);
+                sound.Play(SoundEventController.AudioType.BGM);
+                move.Init();//移動もさせないように
                 SceneManager.UnloadScene(datas[(int)(now_type)].scene_name);//前シーンの削除
-                //StartCoroutine(move.Init(next_data));
-                StartCoroutine(sound.PlayPhysiologicalOneShot(next_data.physiological, 0.5f));
-                sound.SetBGM(null);
-                //move.StopAll();
-               // StartCoroutine(move.Init(next_data, false));//移動パラメータの初期化
                 break;
 
         }
 
 
-        sound.StopSound();//生理音を停止
-       // stimulus.Stop();//触覚刺激のピッチを変更
-        heart.pitch = next_data.heart_pitch;//心拍の音のピッチを変更
+        //  sound.StopSound();//生理音を停止
+        // stimulus.Stop();//触覚刺激のピッチを変更
+        sound.Pitch(SoundEventController.AudioType.HEARTBEAT, next_data.heart_pitch);//心拍の音のピッチを変更
+        stimulus.Pitch(next_data.heart_pitch, StimulusController.Stimulus_Type.HERATBEAT);
        // narration.PlayNarattion(next_data.type);//ナレーションの出力
 
     }
@@ -262,12 +258,13 @@ public class StageManager : MonoBehaviour
     private void UpdateStageParameter(SCENE_TYPE now_type, SCENE_TYPE next_type, SettingData next_data)
     {
         SceneManager.UnloadScene(datas[(int)(now_type)].scene_name);//前シーンの削除
-      //  StartCoroutine(move.Init(next_data));//移動パラメータの初期化
-
+        move.Init(next_data.path_name, true);//移動パラメータの初期化
         light.intensity = next_data.intensity;//ライトの初期化
         light.range = next_data.light_range;//
-        if (next_data.physiological!=null)//生理音が発生する場合イベントの開始
-            sound.PlayPhysiologicalOneShot(next_data.physiological,10f);
+        if (next_data.is_use_physiological)//生理音が発生する場合イベントの開始
+            sound.PlayPhysiological();
         sound.SetBGM(next_data.bgm);
+        sound.Play(SoundEventController.AudioType.BGM);
+        sound.Play(SoundEventController.AudioType.HEARTBEAT);
     }
 }

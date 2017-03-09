@@ -11,17 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e19e2fbfb19ae848838074d718feb57, type: 3}
   m_Name: syoutyou_1
   m_EditorClassIdentifier: 
-  path_name:
-  - 706174685f73796f7574796f755f31
-  - 706174685f73796f7574796f755f31
-  - 706174685f73796f7574796f755f31
-  - 706174685f73796f7574796f755f31
-  scene_name: 73796f7574796f755f31
-  bgm: {fileID: 8300000, guid: 87ab28236f274814cb187348ae897bf4, type: 3}
-  physiological: {fileID: 0}
+  path_name: path_syoutyou_1
+  scene_name: syoutyou_1
+  bgm: 0
+  is_use_physiological: 0
   walk_stimules_pitch: 0.6
   heart_pitch: 0.7
   light_range: 8.5
   intensity: 3
   speed: 0.045
-  type: 3

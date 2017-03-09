@@ -11,16 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e19e2fbfb19ae848838074d718feb57, type: 3}
   m_Name: i
   m_EditorClassIdentifier: 
-  path_name:
-  - 706174685f69
-  - 706174685f695f32
-  - 706174685f69
-  scene_name: 69
-  bgm: {fileID: 8300000, guid: bbcc1c2791153b94b9c236313565113e, type: 3}
-  physiological: {fileID: 0}
+  path_name: path_i
+  scene_name: i
+  bgm: 0
+  is_use_physiological: 0
   walk_stimules_pitch: 0.3
   heart_pitch: 0.85
   light_range: 34
   intensity: 1.8
   speed: 0.06
-  type: 2

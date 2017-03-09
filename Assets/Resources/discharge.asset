@@ -11,17 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e19e2fbfb19ae848838074d718feb57, type: 3}
   m_Name: discharge
   m_EditorClassIdentifier: 
-  path_name:
-  - 6e6f6f6e
-  - 6e6f6f6e
-  - 6e6f6f6e
-  - 6e6f6f6e
-  scene_name: 646973636861726765
-  bgm: {fileID: 0}
-  physiological: {fileID: 8300000, guid: e7553d1243dd25e4fbd49174bada36e6, type: 3}
+  path_name: path_discharge
+  scene_name: discharge
+  bgm: 2
+  is_use_physiological: 0
   walk_stimules_pitch: 1.34
   heart_pitch: 0
   light_range: 8.73576
   intensity: 1.8
   speed: 0
-  type: 10

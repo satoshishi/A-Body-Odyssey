@@ -4,101 +4,146 @@ using System.Collections.Generic;
 
 /// <summary>
 /// サウンド処理
+/// pitch操作
+/// audioの有効無効
+/// 生理音の実行
+/// bgmの変更
 /// </summary>
 public class SoundEventController : MonoBehaviour
 {
+    public enum AudioType
+    {
+        MOVE = 0,
+        HEARTBEAT = 1,
+        BGM = 2,
+        PHYSIOLOGICAL = 3
+    };
+
+    public enum BgmType
+    {
+        NOON = -1,
+        NORMAL = 0,
+        EAT = 1,
+        DISCHARGE = 2,
+        UNDERWATER = 3
+    };
+
+    public struct Audio
+    {
+        public AudioSource source;
+        public bool IsAlreadyPlaying { get; set; }
+
+        public AudioType type;
+
+        public Audio(AudioSource _source, AudioType _type)
+        {
+            source = _source;
+            type = _type;
+            IsAlreadyPlaying = false;
+        }
+
+        /*    public void IsPlaying(bool result)
+            {
+                IsAlreadyPlaying = result;
+            }*/
+    }
+
+    [SerializeField]
+    private List<Audio> AudioGroups;
+
+    [SerializeField]
+    private List<AudioSource> _audio;
+
+    [SerializeField]
+    private List<AudioClip> bgm_clips;
+
 
     void Start()
     {
+        AudioGroups = new List<Audio>();
+
+        for (int i = 0; i < _audio.Count; i++)
+            AudioGroups.Add(new Audio(_audio[i], (AudioType)i));
+
         Init();
     }
 
-    #region 全体
-
-    public void Init()
+    public void Init(float picth = 1, BgmType bgm = BgmType.NOON, bool is_play_physiological = false, bool is_play_heratbeat = false)
     {
-        move_player.mute = true;
-        physiological_player.pitch = 0.4f;
-        bgm_player.pitch = 0.3f;
-        pitch.cutoffFrequency = 5000;
-       // move_player.pitch = 0.4f;
-    }
+        Pitch(1f);
+        Stop();
 
-    public void StopSound()
-    {
-        StopAllCoroutines();
-        move_player.mute = true;
-    }
-
-    public void UpdatePitch(float move, float physiological, float bgm)
-    {
-        pitch.cutoffFrequency = move;
-        physiological_player.pitch = physiological;
-        bgm_player.pitch = bgm;
-    }
-
-    public void UpdatePitch(float move)
-    {
-        pitch.cutoffFrequency = move;
-    }
-
-    #endregion
-
-    #region sound
-
-    public AudioSource physiological_player;//生理音
-
-    public IEnumerator PlayPhysiologicalOneShot(AudioClip clip, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (clip != null)
-            physiological_player.PlayOneShot(clip);
-    }
-
-    #endregion
-
-    #region BGN
-
-    public AudioSource bgm_player;//bgm
-
-    public void SetBGM(AudioClip clip)
-    {
-        if (clip == null)
+        if (bgm != BgmType.NOON)
         {
-            bgm_player.enabled = false;
-            return;
+            SetBGM(bgm);
+            Play(AudioType.BGM);
         }
-        if (bgm_player.clip.name.Equals(clip.name) && bgm_player.isPlaying)
-            return;
 
-        bgm_player.enabled = true;
-        bgm_player.clip = clip;
-        bgm_player.Play();
+        if (is_play_physiological)
+            PlayPhysiological();
+
+        if (is_play_heratbeat)
+            Play(AudioType.HEARTBEAT);
+
     }
 
-    #endregion
-
-    #region move
-
-    public AudioSource move_player;//移動音
-    public AudioLowPassFilter pitch;//2000~5000hz
-
-    public IEnumerator PlayMoveRequestTime(float delay)
+    public void Play(AudioType type)
     {
-        move_player.mute = false;
-        yield return new WaitForSeconds(delay);
-        move_player.mute = true;
+        Audio target = AudioGroups[(int)type];
+
+        if (!target.IsAlreadyPlaying)
+        {
+            target.source.Play();
+            target.IsAlreadyPlaying = true;
+            AudioGroups[(int)type] = target;
+        }
     }
 
-    public void TouchEvent()
+    public void Play()
     {
-        StartCoroutine(PlayMoveRequestTime(0.3f));
+        foreach (Audio a in AudioGroups)
+            Play(a.type);
     }
 
-    public void IsMuteMoveSound(bool result)
+    public void Stop(AudioType type)
     {
-        move_player.mute = result;
+        Audio target = AudioGroups[(int)type];
+
+        if (target.IsAlreadyPlaying)
+        {
+            target.source.Stop();
+            target.IsAlreadyPlaying = false;
+            AudioGroups[(int)type] = target;
+        }
     }
 
-    #endregion
+    public void Stop()
+    {
+        foreach (Audio a in AudioGroups)
+            Stop(a.type);
+    }
+
+    public void Pitch(AudioType type, float pitch)
+    {
+        if (type == AudioType.BGM && pitch == 1)
+            AudioGroups[(int)type].source.pitch = 0.6f;
+
+        AudioGroups[(int)type].source.pitch = pitch;
+    }
+
+    public void Pitch(float pitch)
+    {
+        foreach (Audio a in AudioGroups)
+            Pitch(a.type, pitch);
+    }
+
+    public void PlayPhysiological()
+    {
+        AudioGroups[(int)AudioType.PHYSIOLOGICAL].source.Play(10);
+    }
+
+    public void SetBGM(BgmType type)
+    {
+        AudioGroups[(int)AudioType.BGM].source.clip = bgm_clips[(int)type];
+    }
 }

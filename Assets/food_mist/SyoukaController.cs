@@ -49,8 +49,8 @@ public class SyoukaController : MonoBehaviour {
             yield return new WaitForSeconds(1f);
             time--;
             int normalize =  500+(4500*(time-0) / (20-0));
-            sound.UpdatePitch(normalize);
-         //   stimulus.UpdateStimulusPitch(normalize);
+            sound.Pitch(normalize);
+            stimulus.Pitch(normalize,StimulusController.Stimulus_Type.STIMULUS);
         }
     }
 
@@ -61,8 +61,8 @@ public class SyoukaController : MonoBehaviour {
             yield return new WaitForSeconds(1f);
             time--;
             int normalize = 5000 - (4500 * (time - 0) / (20 - 0));
-            sound.UpdatePitch(normalize);
-           // stimulus.UpdateStimulusPitch(normalize);
+            sound.Pitch(normalize);
+            stimulus.Pitch(normalize, StimulusController.Stimulus_Type.STIMULUS);
         }
 
     }

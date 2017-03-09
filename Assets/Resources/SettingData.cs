@@ -7,10 +7,10 @@ using System.Collections.Generic;
 [CreateAssetMenu()]
 public class SettingData : ScriptableObject
 {
-    public string[] path_name=new string[4];//アニメーションの名前
+    public string path_name;//アニメーションの名前
     public string scene_name = "syokudou";//シーンの名前
-    public AudioClip bgm;//bgm;
-    public AudioClip physiological;
+    public SoundEventController.BgmType bgm;//bgm;
+    public bool is_use_physiological;//生理音を使うか
     public float walk_stimules_pitch = 1.34f;//ほふく音のピッチ
     public float heart_pitch = 0.4f;//心音のピッチ
     public float light_range = 8.73576f;//ライトの範囲

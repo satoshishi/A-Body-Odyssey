@@ -7,7 +7,12 @@ public class MoveController : MonoBehaviour
     private float distance;
     public float Distance
     {
-        private set { distance = value; }
+        private set
+        {
+            if (value == -1)
+                distance = 0f;
+            else distance += value;
+        }
         get { return distance/ iTween.PathLength(iTweenPath.GetPath(PathName)); }
     }
 
@@ -18,30 +23,34 @@ public class MoveController : MonoBehaviour
         get { return path_name; }
     }
 
+    public bool IsAdmitMove;
+
     // Use this for initialization
     void Start()
     {
-        Init();
+      //  Init();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.A))
-        {
-            Move(0.03f);
-        }
+
     }
 
-    public void Init(string p_name="")
+    public void Init(string p_name = "", bool admit = false)
     {
         PathName = p_name;
-        Distance -= Distance;
+        Distance = -1;
+        IsAdmitMove = admit;
+        Invoke("Move",0.01f);
     }
 
     public void Move(float _distance)
-    { 
-        Distance += _distance;
+    {
+        if (!IsAdmitMove)
+            return;
+
+        Distance = _distance;
         if (Distance < 0.0f) Distance = 0.0f;
         if (Distance > 1.0f) Distance = 1.0f;
         iTween.PutOnPath(gameObject, iTweenPath.GetPath(PathName), Distance);
@@ -49,5 +58,10 @@ public class MoveController : MonoBehaviour
         Vector3 fpos = iTween.PointOnPath(iTweenPath.GetPath(PathName), Distance + 0.01f);
         // 少し先の位置を向かせる(戦略2)
         gameObject.transform.LookAt(fpos);
+    }
+
+    private void Move()
+    {
+        Move(0.0001f);
     }
 }

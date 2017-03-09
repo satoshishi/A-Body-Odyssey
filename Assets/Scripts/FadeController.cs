@@ -144,8 +144,8 @@ public class FadeController : MonoBehaviour
             f.Obj.SetActive(false);
         }
 
-        blur.iterations = 0;
-        blur.enabled = false;
+      //  blur.iterations = 0;
+        //blur.enabled = false;
     }
 
     private void UpdateToAlpha(float newValue)

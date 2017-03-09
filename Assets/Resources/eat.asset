@@ -11,17 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e19e2fbfb19ae848838074d718feb57, type: 3}
   m_Name: eat
   m_EditorClassIdentifier: 
-  path_name:
-  - 
-  - 
-  - 
-  - 
-  scene_name: 656174
-  bgm: {fileID: 0}
-  physiological: {fileID: 8300000, guid: dc931c4b15b6be64cbdd37c57801015b, type: 3}
+  path_name: path_eat
+  scene_name: eat
+  bgm: 0
+  is_use_physiological: 0
   walk_stimules_pitch: 0.6
   heart_pitch: 0
   light_range: 20
   intensity: 7
   speed: 0
-  type: 0
