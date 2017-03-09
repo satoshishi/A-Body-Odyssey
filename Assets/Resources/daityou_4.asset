@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e19e2fbfb19ae848838074d718feb57, type: 3}
+  m_Name: daityou_4
+  m_EditorClassIdentifier: 
+  path_name: path_syokudou_daityou_4
+  scene_name: daityou_4
+  bgm: 0
+  is_use_physiological: 0
+  walk_stimules_pitch: 0.8
+  heart_pitch: 0.2
+  light_range: 33
+  intensity: 1.8
+  speed: 0.06

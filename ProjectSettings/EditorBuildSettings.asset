@@ -4,4 +4,28 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scene/daityou_1.unity
+  - enabled: 1
+    path: Assets/Scene/daityou_2.unity
+  - enabled: 1
+    path: Assets/Scene/daityou_3.unity
+  - enabled: 1
+    path: Assets/Scene/daityou_4.unity
+  - enabled: 1
+    path: Assets/Scene/discharge.unity
+  - enabled: 1
+    path: Assets/Scene/eat.unity
+  - enabled: 1
+    path: Assets/Scene/i.unity
+  - enabled: 1
+    path: Assets/Scene/Player.unity
+  - enabled: 1
+    path: Assets/Scene/syokudou.unity
+  - enabled: 1
+    path: Assets/Scene/syoutyou_1.unity
+  - enabled: 1
+    path: Assets/Scene/syoutyou_2.unity
+  - enabled: 1
+    path: Assets/Scene/syoutyou_3.unity
