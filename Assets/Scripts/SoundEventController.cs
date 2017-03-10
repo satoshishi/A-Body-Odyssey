@@ -68,9 +68,13 @@ public class SoundEventController : MonoBehaviour
         Init();
     }
 
-    public void Init(float picth = 1, BgmType bgm = BgmType.NOON, bool is_play_physiological = false, bool is_play_heratbeat = false)
+    public void Init(float heart_picth = 1, BgmType bgm = BgmType.NOON, bool is_play_physiological = false, bool is_play_heratbeat = false)
     {
-        Pitch(1f);
+        if (heart_picth == 1)
+        {
+            Pitch(heart_picth);
+        }
+        else Pitch(AudioType.HEARTBEAT, heart_picth);
         Stop();
 
         if (bgm != BgmType.NOON)
@@ -80,7 +84,7 @@ public class SoundEventController : MonoBehaviour
         }
 
         if (is_play_physiological)
-            PlayPhysiological();
+            Invoke("PlayPhysiological", 10f);
 
         if (is_play_heratbeat)
             Play(AudioType.HEARTBEAT);
@@ -125,10 +129,12 @@ public class SoundEventController : MonoBehaviour
 
     public void Pitch(AudioType type, float pitch)
     {
-        if (type == AudioType.BGM && pitch == 1)
+        if ((type == AudioType.BGM && pitch == 1))
             AudioGroups[(int)type].source.pitch = 0.6f;
-
-        AudioGroups[(int)type].source.pitch = pitch;
+        else if (type == AudioType.PHYSIOLOGICAL)
+            AudioGroups[(int)type].source.pitch = 0.4f;
+        else
+            AudioGroups[(int)type].source.pitch = pitch;
     }
 
     public void Pitch(float pitch)
@@ -139,7 +145,7 @@ public class SoundEventController : MonoBehaviour
 
     public void PlayPhysiological()
     {
-        AudioGroups[(int)AudioType.PHYSIOLOGICAL].source.Play(10);
+        AudioGroups[(int)AudioType.PHYSIOLOGICAL].source.Play();
     }
 
     public void SetBGM(BgmType type)

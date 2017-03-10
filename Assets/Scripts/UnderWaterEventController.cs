@@ -26,7 +26,7 @@ public class UnderWaterEventController : MonoBehaviour
         if (collider.CompareTag("Player") && !Is_Already_Complete_UnderWaterEvent)
         {
        //     stimulu.Stop();
-            sound.Pitch(0.2f);//水中音のピッチを下げる
+            sound.Pitch(0.4f);//水中音のピッチを下げる
             stimulu.Pitch(0.2f,StimulusController.Stimulus_Type.STIMULUS);//触覚刺激のピッチを変更。
             stimulu.Pitch(0.2f, StimulusController.Stimulus_Type.HERATBEAT);//触覚刺激のピッチを変更。
             fade.Fadeout(0.4f, 0f, FadeController.FADE_COLOR_TYPE.YELLOW, 0.3f, false);//画面が黄ばむ

@@ -249,7 +249,7 @@ public class StageManager : MonoBehaviour
 
         //  sound.StopSound();//生理音を停止
         // stimulus.Stop();//触覚刺激のピッチを変更
-        sound.Pitch(SoundEventController.AudioType.HEARTBEAT, next_data.heart_pitch);//心拍の音のピッチを変更
+       // sound.Pitch(SoundEventController.AudioType.HEARTBEAT, next_data.heart_pitch);//心拍の音のピッチを変更
         stimulus.Pitch(next_data.heart_pitch, StimulusController.Stimulus_Type.HERATBEAT);
        // narration.PlayNarattion(next_data.type);//ナレーションの出力
 
@@ -258,13 +258,10 @@ public class StageManager : MonoBehaviour
     private void UpdateStageParameter(SCENE_TYPE now_type, SCENE_TYPE next_type, SettingData next_data)
     {
         SceneManager.UnloadScene(datas[(int)(now_type)].scene_name);//前シーンの削除
-        move.Init(next_data.path_name, true);//移動パラメータの初期化
+        move.Init(next_data.path_name, true,next_data.speed);//移動パラメータの初期化
         light.intensity = next_data.intensity;//ライトの初期化
         light.range = next_data.light_range;//
-        if (next_data.is_use_physiological)//生理音が発生する場合イベントの開始
-            sound.PlayPhysiological();
+        sound.Init(next_data.heart_pitch, next_data.bgm, next_data.is_use_physiological, true);
         sound.SetBGM(next_data.bgm);
-        sound.Play(SoundEventController.AudioType.BGM);
-        sound.Play(SoundEventController.AudioType.HEARTBEAT);
     }
 }

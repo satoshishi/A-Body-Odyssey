@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e19e2fbfb19ae848838074d718feb57, type: 3}
   m_Name: daityou_3
   m_EditorClassIdentifier: 
-  path_name: path_syokudou_daityou_3
+  path_name: path_daityou_3
   scene_name: daityou_3
   bgm: 0
   is_use_physiological: 0

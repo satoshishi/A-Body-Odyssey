@@ -23,6 +23,13 @@ public class MoveController : MonoBehaviour
         get { return path_name; }
     }
 
+    private float speed;
+    public float Speed
+    {
+        set { speed = value; }
+        get { return speed; }
+    }
+
     public bool IsAdmitMove;
 
     // Use this for initialization
@@ -37,20 +44,21 @@ public class MoveController : MonoBehaviour
 
     }
 
-    public void Init(string p_name = "", bool admit = false)
+    public void Init(string p_name = "", bool admit = false,float speed = 0.001f)
     {
         PathName = p_name;
         Distance = -1;
+        Speed = speed;
         IsAdmitMove = admit;
-        Invoke("Move",0.01f);
+        Invoke("Move",0.05f);
     }
 
-    public void Move(float _distance)
+    public void Move()
     {
         if (!IsAdmitMove)
             return;
 
-        Distance = _distance;
+        Distance = Speed;
         if (Distance < 0.0f) Distance = 0.0f;
         if (Distance > 1.0f) Distance = 1.0f;
         iTween.PutOnPath(gameObject, iTweenPath.GetPath(PathName), Distance);
@@ -58,10 +66,5 @@ public class MoveController : MonoBehaviour
         Vector3 fpos = iTween.PointOnPath(iTweenPath.GetPath(PathName), Distance + 0.01f);
         // 少し先の位置を向かせる(戦略2)
         gameObject.transform.LookAt(fpos);
-    }
-
-    private void Move()
-    {
-        Move(0.0001f);
     }
 }
