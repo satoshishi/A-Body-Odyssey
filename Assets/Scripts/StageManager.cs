@@ -63,7 +63,7 @@ public class StageManager : MonoBehaviour
 
         InitStages();
  //  ChangeStage(SCENE_TYPE.NOON);
-        ChangeStage(SCENE_TYPE.EAT);
+        ChangeStage(SCENE_TYPE.NOON);
     }
 
     void Update()
@@ -209,7 +209,8 @@ public class StageManager : MonoBehaviour
         switch (next_type)
         {
             case SCENE_TYPE.EAT:
-                stimulus.StopAll();
+                stimulus.StopAll(StimulusController.Stimulus_Type.HERATBEAT);
+                stimulus.StopAll(StimulusController.Stimulus_Type.STIMULUS);
                 light.intensity = next_data.intensity;//ライト
                 light.range = next_data.light_range;
                 sound.SetBGM(SoundEventController.BgmType.EAT);
@@ -236,7 +237,8 @@ public class StageManager : MonoBehaviour
                 break;
 
             case SCENE_TYPE.DISCHARGE:
-                stimulus.StopAll();//刺激も停止
+                stimulus.StopAll(StimulusController.Stimulus_Type.HERATBEAT);
+                stimulus.StopAll(StimulusController.Stimulus_Type.STIMULUS);
                 sound.Stop();//soundを全部止める
                 sound.SetBGM(SoundEventController.BgmType.DISCHARGE);
                 sound.Play(SoundEventController.AudioType.BGM);
@@ -263,5 +265,7 @@ public class StageManager : MonoBehaviour
         light.range = next_data.light_range;//
         sound.Init(next_data.heart_pitch, next_data.bgm, next_data.is_use_physiological, true);
         sound.SetBGM(next_data.bgm);
+        stimulus.Pitch(next_data.heart_pitch, StimulusController.Stimulus_Type.HERATBEAT);
+        stimulus.Play(StimulusController.Stimulus_Type.HERATBEAT);
     }
 }

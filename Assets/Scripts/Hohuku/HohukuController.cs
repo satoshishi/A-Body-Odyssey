@@ -26,8 +26,8 @@ public class HohukuController : MonoBehaviour
     private HandType type;
     [SerializeField]
     private SoundEventController sound;
-    [SerializeField]
-    private bool is_use_debug_move;
+    /*  [SerializeField]
+      private bool is_use_debug_move;*/
 
     public Transform hand;
     public Transform mat;
@@ -113,21 +113,19 @@ public class HohukuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // DepthDistance = hand.position.y;
+
 
         if (Input.GetKey(KeyCode.X))
         {
-            is_use_debug_move = true;
-            state = HandState.HOHUKU;
+            move.Move();
+            sound.Play(SoundEventController.AudioType.MOVE);
+            stimulus.UpdateStrength(0.5f);
         }
         else
         {
-            is_use_debug_move = false;
-            state = HandState.IDLE;
-            stimulus.StopAll();
+            // DepthDistance = hand.position.y; 
+            UpdateHandLogic();
         }
-
-        UpdateHandLogic();
     }
 
     public void UpdateHandLogic()
@@ -135,17 +133,16 @@ public class HohukuController : MonoBehaviour
         switch (state)
         {
             case HandState.IDLE:
-                //        if (IsGround()) state = HandState.GROUND;
+                if (IsGround()) state = HandState.GROUND;
                 break;
             case HandState.GROUND:
                 StartPos = transform.localPosition.z;
                 state = HandState.HOHUKU;
                 break;
             case HandState.HOHUKU:
-                if (!IsGround() && !is_use_debug_move)
-                {/*
-                     StopAllCoroutines();
-                    IsAlreadyMove = false;*/
+                if (!IsGround()/* && !is_use_debug_move*/)
+                {
+                    StopAllCoroutines();
                     stimulus.StopAll();
                     sound.Stop(SoundEventController.AudioType.MOVE);
                     state = HandState.IDLE;
@@ -153,13 +150,11 @@ public class HohukuController : MonoBehaviour
 
                 NowPullHandPos = transform.localPosition.z;
 
-                if (IsMoveForward() || is_use_debug_move)
+                if (IsMoveForward() /*|| is_use_debug_move*/)
                 {
                     move.Move();
                     sound.Play(SoundEventController.AudioType.MOVE);
-                    // stimulus.UpdateStrength(PullArea()); 本来
-                    stimulus.UpdateStrength(0.5f);
-                    //  Debug.Log(PullArea());
+                    stimulus.UpdateStrength(PullArea());
                 }
                 BeforePullArea = PullArea();
                 break;

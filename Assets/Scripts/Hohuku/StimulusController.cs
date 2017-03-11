@@ -94,6 +94,14 @@ public class StimulusController : MonoBehaviour
         }
     }
 
+    public void Play(Stimulus_Type type)
+    {
+       List<Stimulus> target = type == Stimulus_Type.STIMULUS ? Stimuluses_Move : Stimuluses_HeartBeat;
+
+        foreach (Stimulus s in target)
+            Play(s.type, s.ch);
+    }
+
     /// <summary>
     /// 刺激停止
     /// </summary>
