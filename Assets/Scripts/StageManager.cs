@@ -63,7 +63,7 @@ public class StageManager : MonoBehaviour
 
         InitStages();
  //  ChangeStage(SCENE_TYPE.NOON);
-        ChangeStage(SCENE_TYPE.EAT);
+        ChangeStage(SCENE_TYPE.NOON);
     }
 
     void Update()
