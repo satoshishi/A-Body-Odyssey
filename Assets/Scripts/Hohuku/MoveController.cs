@@ -58,6 +58,8 @@ public class MoveController : MonoBehaviour
         if (!IsAdmitMove)
             return;
 
+        Debug.Log("move");
+
         Distance = Speed;
         if (Distance < 0.0f) Distance = 0.0f;
         if (Distance > 1.0f) Distance = 1.0f;

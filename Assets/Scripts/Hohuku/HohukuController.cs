@@ -21,8 +21,6 @@ public class HohukuController : MonoBehaviour
     }
 
     [SerializeField]
-    private HandState state;
-    [SerializeField]
     private HandType type;
     [SerializeField]
     private SoundEventController sound;
@@ -34,6 +32,15 @@ public class HohukuController : MonoBehaviour
     public MatCalibration calibration;
     public MoveController move;
     public StimulusController stimulus;
+    public HohukuController reverse_hand;
+
+    [SerializeField]
+    private HandState state;
+    public HandState State
+    {
+        private set { state = value; }
+        get { return state; }
+    }
 
     /// <summary>
     /// マットと手の距離(深さ)
@@ -42,7 +49,7 @@ public class HohukuController : MonoBehaviour
     public float DepthDistance
     {
         set { depth = value; }
-        get { return (depth - (mat.position.y * 1.1f)); }
+        get { return (depth - (mat.position.y)*1.1f); }
     }
 
     /// <summary>
@@ -78,6 +85,10 @@ public class HohukuController : MonoBehaviour
     /// <returns></returns>
     public bool IsGround()
     {
+           Debug.Log("depth area is " + calibration.RightHandDepth +
+               "now area is " + DepthDistance);
+       /* Debug.Log("hand " + hand.localPosition +
+            " mat " + mat.localPosition);*/
         return DepthDistance <= (type == HandType.RIGHT ? calibration.RightHandDepth : calibration.LeftHandDepth);
     }
 
@@ -113,50 +124,65 @@ public class HohukuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
         if (Input.GetKey(KeyCode.X))
         {
+            Debug.Log("ready");
             move.Move();
             sound.Play(SoundEventController.AudioType.MOVE);
             stimulus.UpdateStrength(0.5f);
         }
         else
         {
-            // DepthDistance = hand.position.y; 
+            DepthDistance = hand.position.y;
             UpdateHandLogic();
         }
     }
 
     public void UpdateHandLogic()
     {
-        switch (state)
+        switch (State)
         {
             case HandState.IDLE:
-                if (IsGround()) state = HandState.GROUND;
+                if (IsGround())
+                {
+                    State = HandState.GROUND;
+                    StartPos = transform.localPosition.z;
+                }
                 break;
             case HandState.GROUND:
-                StartPos = transform.localPosition.z;
-                state = HandState.HOHUKU;
-                break;
-            case HandState.HOHUKU:
-                if (!IsGround()/* && !is_use_debug_move*/)
+                if (!IsGround())
                 {
-                    StopAllCoroutines();
-                    stimulus.StopAll();
-                    sound.Stop(SoundEventController.AudioType.MOVE);
-                    state = HandState.IDLE;
+                    if (reverse_hand.State != HandState.HOHUKU)
+                    {
+                        stimulus.StopAll();
+                        sound.Stop(SoundEventController.AudioType.MOVE);
+                    }
+                    State = HandState.IDLE;
+                    break;
                 }
 
                 NowPullHandPos = transform.localPosition.z;
 
-                if (IsMoveForward() /*|| is_use_debug_move*/)
+                if (IsMoveForward())
+                    State = HandState.HOHUKU;
+
+                BeforePullArea = PullArea();
+
+                break;
+            case HandState.HOHUKU:
+
+                NowPullHandPos = transform.localPosition.z;
+
+                if (IsMoveForward())
                 {
                     move.Move();
                     sound.Play(SoundEventController.AudioType.MOVE);
                     stimulus.UpdateStrength(PullArea());
                 }
+                else State = HandState.GROUND;
+
                 BeforePullArea = PullArea();
+
                 break;
         }
     }

@@ -102,7 +102,7 @@ public class MatCalibration : MonoBehaviour
     public void Calibration()
     {
         RightHandDepth = (right_hand.position.y - transform.position.y) *1.04f;
-        LeftHandDepth = (left_hand.position.y - transform.position.y)* 1.04f;
+        LeftHandDepth = (left_hand.position.y - transform.position.y) * 1.04f;
         PullAreaMax = hmd.transform.localPosition.z;
         PullAreaMin = transform.localPosition.z;
         index.IsAdmitChangeDeviceIndex = false;
