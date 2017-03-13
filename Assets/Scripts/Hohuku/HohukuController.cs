@@ -49,7 +49,7 @@ public class HohukuController : MonoBehaviour
     public float DepthDistance
     {
         set { depth = value; }
-        get { return (depth - (mat.localPosition.y)*1.5f); }
+        get { return (depth - (mat.localPosition.y)); }
     }
 
     /// <summary>
@@ -94,10 +94,10 @@ public class HohukuController : MonoBehaviour
 
     public bool IsMoveForward()
     {
-        /*     Debug.Log("before " + BeforePullArea +
-                 " pull " + PullArea());*/
+       Debug.Log("before " + BeforePullArea +
+            " pull " + PullArea());
 
-        return BeforePullArea < PullArea() && (PullArea() >= 0.1f);
+        return BeforePullArea < PullArea() && (PullArea()*10 >= 0.1f);
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class HohukuController : MonoBehaviour
     /// <returns></returns>
     public float PullArea()
     {
-        /*  Debug.Log("nowpull : " + NowPullHandPos +
+       /*   Debug.Log("nowpull : " + NowPullHandPos +
               " min : " + calibration.PullAreaMin +
               " nax : " + calibration.PullAreaMax);*/
         float area = Mathf.Ceil((NowPullHandPos - calibration.PullAreaMin) / (calibration.PullAreaMax - calibration.PullAreaMin) * 100f) / 100f;
@@ -143,14 +143,16 @@ public class HohukuController : MonoBehaviour
         switch (State)
         {
             case HandState.IDLE:
-                if (IsGround())
-                {
-                    State = HandState.GROUND;
-                    StartPos = transform.localPosition.z;
-                }
+                StartPos = transform.localPosition.z;
+                State = HandState.GROUND;
+                /*   if (IsGround())
+                   {
+                       State = HandState.GROUND;
+                       StartPos = transform.localPosition.z;
+                   }*/
                 break;
             case HandState.GROUND:
-                if (!IsGround())
+                /*if (!IsGround())
                 {
                     if (reverse_hand.State != HandState.HOHUKU)
                     {
@@ -159,22 +161,27 @@ public class HohukuController : MonoBehaviour
                     }
                     State = HandState.IDLE;
                     break;
-                }
+                }*/
 
                 NowPullHandPos = transform.localPosition.z;
 
                 if (IsMoveForward())
+                {
                     State = HandState.HOHUKU;
+                }
+                else State = HandState.IDLE;
 
-                BeforePullArea = PullArea();
+                 BeforePullArea = PullArea();
 
                 break;
+
             case HandState.HOHUKU:
 
                 NowPullHandPos = transform.localPosition.z;
 
                 if (IsMoveForward())
                 {
+                    Debug.Log("move");
                     move.Move();
                     sound.Play(SoundEventController.AudioType.MOVE);
                     stimulus.UpdateStrength(PullArea());

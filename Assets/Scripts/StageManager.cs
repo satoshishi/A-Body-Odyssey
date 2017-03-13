@@ -63,7 +63,7 @@ public class StageManager : MonoBehaviour
         //  SceneManager.LoadScene("Arduino", LoadSceneMode.Additive);
 
         InitStages();
-        ChangeStage(SCENE_TYPE.NOON);
+        ChangeStage(SCENE_TYPE.EAT);
         //    ChangeStage(SCENE_TYPE.EAT);
     }
 
