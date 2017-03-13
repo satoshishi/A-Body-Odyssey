@@ -19,4 +19,4 @@ MonoBehaviour:
   heart_pitch: 0.5
   light_range: 24
   intensity: 1.8
-  speed: 0.05
+  speed: 0.13

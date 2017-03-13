@@ -49,7 +49,7 @@ public class HohukuController : MonoBehaviour
     public float DepthDistance
     {
         set { depth = value; }
-        get { return (depth - (mat.position.y)*1.1f); }
+        get { return (depth - (mat.localPosition.y)*1.5f); }
     }
 
     /// <summary>
@@ -85,9 +85,9 @@ public class HohukuController : MonoBehaviour
     /// <returns></returns>
     public bool IsGround()
     {
-           Debug.Log("depth area is " + calibration.RightHandDepth +
+        /*Debug.Log("depth area is " + calibration.RightHandDepth +
                "now area is " + DepthDistance);
-       /* Debug.Log("hand " + hand.localPosition +
+      /*  Debug.Log("hand " + hand.localPosition +
             " mat " + mat.localPosition);*/
         return DepthDistance <= (type == HandType.RIGHT ? calibration.RightHandDepth : calibration.LeftHandDepth);
     }
@@ -133,7 +133,7 @@ public class HohukuController : MonoBehaviour
         }
         else
         {
-            DepthDistance = hand.position.y;
+            DepthDistance = hand.localPosition.y;
             UpdateHandLogic();
         }
     }

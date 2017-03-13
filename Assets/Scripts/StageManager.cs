@@ -8,13 +8,14 @@ using System.Collections.Generic;
 /// </summary>
 public class StageManager : MonoBehaviour
 {
-   // public AudioSource heart;
+    // public AudioSource heart;
     public SoundEventController sound;
     public MoveController move;
     public BodyMapController narration;
     public Light light;
     public SyoukaController syouka;
     public StimulusController stimulus;
+    public bool Is_First_Stage = true;
 
     //各巡回数を管理するDictionary
     private Dictionary<SCENE_TYPE, SCENE_TYPE> FULL_STAGE;
@@ -25,16 +26,16 @@ public class StageManager : MonoBehaviour
     private List<Dictionary<SCENE_TYPE, SCENE_TYPE>> STAGES;
     //public STAGE_SIZE size = STAGE_SIZE.FULL;
 
-//    private bool Is_Already_Decide_Stage_Size = false;
+    //    private bool Is_Already_Decide_Stage_Size = false;
 
     //巡回するサイズ
-  /*  public enum STAGE_SIZE
-    {
-        FULL = 0,
-        SEVEN = 1,
-        SIX = 2,
-        FOUR = 3
-    };*/
+    /*  public enum STAGE_SIZE
+      {
+          FULL = 0,
+          SEVEN = 1,
+          SIX = 2,
+          FOUR = 3
+      };*/
 
     //ステージの種類
     public enum SCENE_TYPE
@@ -58,26 +59,26 @@ public class StageManager : MonoBehaviour
 
     void Start()
     {
-     //   SceneManager.LoadScene("Player", LoadSceneMode.Single);
-      //  SceneManager.LoadScene("Arduino", LoadSceneMode.Additive);
+        //   SceneManager.LoadScene("Player", LoadSceneMode.Single);
+        //  SceneManager.LoadScene("Arduino", LoadSceneMode.Additive);
 
         InitStages();
- //  ChangeStage(SCENE_TYPE.NOON);
         ChangeStage(SCENE_TYPE.NOON);
+        //    ChangeStage(SCENE_TYPE.EAT);
     }
 
     void Update()
     {
         /*移動する臓器の数を指定*/
         /*その後摂取シーンに移行*/
-       // if (!Is_Already_Decide_Stage_Size)
+        // if (!Is_Already_Decide_Stage_Size)
         //    DecideStageSize();
 
         /*Rキーを押したら初期シーンにリセット*/
         if (Input.GetKeyUp(KeyCode.R))
             ResetStage();
 
-        if (Input.GetKeyUp(KeyCode.Escape)) 
+        if (Input.GetKeyUp(KeyCode.Escape))
             Application.Quit();
 
     }
@@ -132,17 +133,17 @@ public class StageManager : MonoBehaviour
     void InitStages()
     {
         FULL_STAGE = new Dictionary<SCENE_TYPE, SCENE_TYPE>()
-         {     
+         {
             {SCENE_TYPE.NOON,SCENE_TYPE.EAT},
             {SCENE_TYPE.EAT,SCENE_TYPE.SYOKUDOU},
             {SCENE_TYPE.SYOKUDOU,SCENE_TYPE.I},
             {SCENE_TYPE.I,SCENE_TYPE.SYOUTYOU_1},
             {SCENE_TYPE.SYOUTYOU_1,SCENE_TYPE.SYOUTYOU_2},
-            {SCENE_TYPE.SYOUTYOU_2,SCENE_TYPE.SYOUTYOU_3},
-            {SCENE_TYPE.SYOUTYOU_3,SCENE_TYPE.DAITYOU_1},
+            {SCENE_TYPE.SYOUTYOU_2,SCENE_TYPE.DAITYOU_1},
+//            {SCENE_TYPE.SYOUTYOU_3,SCENE_TYPE.DAITYOU_1},
             {SCENE_TYPE.DAITYOU_1,SCENE_TYPE.DAITYOU_2},
-            {SCENE_TYPE.DAITYOU_2,SCENE_TYPE.DAITYOU_3},
-            {SCENE_TYPE.DAITYOU_3,SCENE_TYPE.DAITYOU_4},
+            {SCENE_TYPE.DAITYOU_2,SCENE_TYPE.DAITYOU_4},
+//            {SCENE_TYPE.DAITYOU_3,SCENE_TYPE.DAITYOU_4},
             {SCENE_TYPE.DAITYOU_4,SCENE_TYPE.DISCHARGE}
         };
         /*
@@ -182,7 +183,7 @@ public class StageManager : MonoBehaviour
            // SIX_STAGE,
            // FOUR_STAGE
         };
-        
+
     }
 
     /// <summary>
@@ -214,8 +215,9 @@ public class StageManager : MonoBehaviour
                 light.intensity = next_data.intensity;//ライト
                 light.range = next_data.light_range;
                 sound.SetBGM(SoundEventController.BgmType.EAT);
+                Is_First_Stage = false;
                 break;
-                
+
             case SCENE_TYPE.SYOUTYOU_1:
                 syouka.UpdateSyoukaEvent(SCENE_TYPE.SYOUTYOU_1);
                 UpdateStageParameter(now_type, next_type, next_data);
@@ -243,7 +245,7 @@ public class StageManager : MonoBehaviour
                 sound.SetBGM(SoundEventController.BgmType.DISCHARGE);
                 sound.Play(SoundEventController.AudioType.BGM);
                 move.Init();//移動もさせないように
-                SceneManager.UnloadScene(datas[(int)(now_type)].scene_name);//前シーンの削除
+                SceneManager.UnloadSceneAsync(datas[(int)(now_type)].scene_name);//前シーンの削除
                 break;
 
         }
@@ -251,16 +253,19 @@ public class StageManager : MonoBehaviour
 
         //  sound.StopSound();//生理音を停止
         // stimulus.Stop();//触覚刺激のピッチを変更
-       // sound.Pitch(SoundEventController.AudioType.HEARTBEAT, next_data.heart_pitch);//心拍の音のピッチを変更
+        // sound.Pitch(SoundEventController.AudioType.HEARTBEAT, next_data.heart_pitch);//心拍の音のピッチを変更
         stimulus.Pitch(next_data.heart_pitch, StimulusController.Stimulus_Type.HERATBEAT);
-       // narration.PlayNarattion(next_data.type);//ナレーションの出力
+        // narration.PlayNarattion(next_data.type);//ナレーションの出力
 
     }
 
     private void UpdateStageParameter(SCENE_TYPE now_type, SCENE_TYPE next_type, SettingData next_data)
     {
-        SceneManager.UnloadScene(datas[(int)(now_type)].scene_name);//前シーンの削除
-        move.Init(next_data.path_name, true,next_data.speed);//移動パラメータの初期化
+        if (!Is_First_Stage)
+            SceneManager.UnloadSceneAsync(datas[(int)(now_type)].scene_name);//前シーンの削除
+        else Is_First_Stage = false;
+
+        move.Init(next_data.path_name, true, next_data.speed);//移動パラメータの初期化
         light.intensity = next_data.intensity;//ライトの初期化
         light.range = next_data.light_range;//
         sound.Init(next_data.heart_pitch, next_data.bgm, next_data.is_use_physiological, true);

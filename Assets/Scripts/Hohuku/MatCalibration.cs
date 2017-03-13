@@ -84,28 +84,30 @@ public class MatCalibration : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        LoadAll();
+        //LoadAll();
+       
     }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyUp(KeyCode.C))
-            Calibration();
+            Invoke("Calibration", 10f);
 
 
-       // Debug.Log(GetNowDistance(right_hand));
-      //  if (GetNowDistance(right_hand) <= RightHandDepth)
-         //   Debug.Log("接地");
+        // Debug.Log(GetNowDistance(right_hand));
+        //  if (GetNowDistance(right_hand) <= RightHandDepth)
+        //   Debug.Log("接地");
     }
 
     public void Calibration()
     {
-        RightHandDepth = (right_hand.position.y - transform.position.y) *1.04f;
-        LeftHandDepth = (left_hand.position.y - transform.position.y) * 1.04f;
+        RightHandDepth = (right_hand.localPosition.y - transform.localPosition.y) *1.04f;
+        LeftHandDepth = (left_hand.localPosition.y - transform.localPosition.y) * 1.04f;
         PullAreaMax = hmd.transform.localPosition.z;
-        PullAreaMin = transform.localPosition.z;
+        PullAreaMin = transform.localPosition.z*1.1f;
         index.IsAdmitChangeDeviceIndex = false;
+        mat_mesh.enabled = false;
     }
 
     public void SaveCalibrationData(string key, float value)
